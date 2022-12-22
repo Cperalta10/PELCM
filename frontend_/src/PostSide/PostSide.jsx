@@ -1,9 +1,12 @@
 import React from 'react';
+import PostShare from '../components/PostShare/PostShare';
 import './PostSide.css';
 
 const PostSide = () => {
   return (
-    <div className="PostSide">hi</div>
+    <div className="PostSide">
+        <PostShare />
+    </div>
   )
 }
 

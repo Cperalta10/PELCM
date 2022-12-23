@@ -5,6 +5,7 @@ import { UilScenery } from '@iconscout/react-unicons';
 import { UilPlayCircle } from '@iconscout/react-unicons';
 import { UilLocationPoint } from '@iconscout/react-unicons';
 import { UilSchedule } from '@iconscout/react-unicons';
+import { UilTimes } from '@iconscout/react-unicons';
 
 const PostShare = () => {
     const [image, setImage] = useState(null);
@@ -48,6 +49,12 @@ const PostShare = () => {
                         <input type="file" name='myImage' ref={imageRef} onChange={onImageChange} />
                     </div>
                 </div>
+                {image && (
+                    <div className="previewImage">
+                        <UilTimes onClick={() => setImage(null)} />
+                        <img src={image.image} alt="" />
+                    </div>
+                )}
             </div>
         </div>
     )

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const AuthRoute = require("./routes/AuthRoute");
 const userRoute = require("./routes/UserRoute");
+const PostRoute = require("./routes/PostRoute");
 const app = express();
 
 // app.use(express.json());
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use("/api/auth", AuthRoute);
 app.use("/api/user", userRoute);
+app.use("/api/post", PostRoute);
 
 mongoose.set("strictQuery", false);
 mongoose

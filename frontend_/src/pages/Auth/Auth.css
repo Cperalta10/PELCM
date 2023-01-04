@@ -1,4 +1,4 @@
-.Auth{
+.Auth {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7,22 +7,22 @@
     position: relative;
 }
 
-.Auth>div{
+.Auth > div {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.a-left{
+.a-left {
     gap: 2rem;
 }
 
-.a-left>img{
-    width: 4rem;
-    height: 4rem;
+.a-left > img {
+    width: 6rem;
+    height: 6rem;
 }
 
-.Webname>h1{
+.Webname > h1 {
     font-size: 3rem;
     background-color: red;
     /* creating the gradient */
@@ -36,11 +36,11 @@
     -moz-text-fil-color: transparent;
 }
 
-.Webname>h6{
-    font-size: .85rem;
+.Webname > h6 {
+    font-size: 0.85rem;
 }
 
-.infoForm{
+.infoForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -48,7 +48,7 @@
     gap: 2rem;
 }
 
-.infoInput{
+.infoInput {
     border: none;
     outline: none;
     background-color: var(--inputColor);
@@ -57,31 +57,27 @@
     flex: 1;
 }
 
-.infoForm>div{
+.infoForm > div {
     display: flex;
     gap: 1rem;
     height: 2rem;
     width: 90%;
 }
 
-.infoButton{
+.infoButton {
     width: 6rem;
     height: 2rem;
     align-self: flex-end;
 }
 
-.authForm{
+.authForm {
     background-color: var(--cardColor);
     border-radius: 1rem;
     padding: 1rem;
 }
 
-.authForm>div{
+.authForm > div {
     width: 100%;
     align-items: center;
     justify-content: center;
 }
-
-
-
-

@@ -1,63 +1,109 @@
-import React, { useState, useRef } from 'react';
-import ProfileImage from '../../img/profileImg.jpg';
-import './PostShare.css'
-import { UilScenery } from '@iconscout/react-unicons';
-import { UilPlayCircle } from '@iconscout/react-unicons';
-import { UilLocationPoint } from '@iconscout/react-unicons';
-import { UilSchedule } from '@iconscout/react-unicons';
-import { UilTimes } from '@iconscout/react-unicons';
+import React, { useState, useRef } from "react";
+import ProfileImage from "../../img/profileImg.jpg";
+import "./PostShare.css";
+import { UilScenery } from "@iconscout/react-unicons";
+import { UilPlayCircle } from "@iconscout/react-unicons";
+import { UilLocationPoint } from "@iconscout/react-unicons";
+import { UilSchedule } from "@iconscout/react-unicons";
+import { UilTimes } from "@iconscout/react-unicons";
+import { useDispatch, useSelector } from "react-redux";
+import { uploadImage } from "../../actions/uploadAction";
 
 const PostShare = () => {
+    const dispatch = useDispatch;
+    const { existingUser } = useSelector((state) => state.authReducer.authData);
     const [image, setImage] = useState(null);
+    const desc = useRef();
     const imageRef = useRef();
 
     const onImageChange = (e) => {
-        if(e.target.files && e.target.files[0]){
+        if (e.target.files && e.target.files[0]) {
             let img = e.target.files[0];
-            setImage({
-                image: URL.createObjectURL(img),
-            })
+            setImage(img);
         }
-    }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const newPost = {
+            userId: existingUser._id,
+            desc: desc.current.value,
+        };
+
+        if (image) {
+            const data = new FormData();
+            const filename = Date.now() + image.name;
+            data.append("name", filename);
+            data.append("file", image);
+            newPost.image = filename;
+            console.log(newPost);
+            try {
+                dispatch(uploadImage(data));
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
 
     return (
         <div className="PostShare">
             <img src={ProfileImage} alt="" />
             <div>
-                <input type="text" placeholder="What's happening" />
+                <input
+                    ref={desc}
+                    required
+                    type="text"
+                    placeholder="What's happening"
+                />
                 <div className="postOptions">
-                    <div className="option" style={{color:"var(--photo)"}} onClick={() => imageRef.current.click()} >
+                    <div
+                        className="option"
+                        style={{ color: "var(--photo)" }}
+                        onClick={() => imageRef.current.click()}
+                    >
                         <UilScenery />
                         Photo
                     </div>
-                    <div className="option" style={{color:"var(--video)"}}>
+                    <div className="option" style={{ color: "var(--video)" }}>
                         <UilPlayCircle />
                         Video
                     </div>
-                    <div className="option" style={{color:"var(--location)"}}>
+                    <div
+                        className="option"
+                        style={{ color: "var(--location)" }}
+                    >
                         <UilLocationPoint />
                         Location
                     </div>
-                    <div className="option" style={{color:"var(--schedule)"}}>
+                    <div
+                        className="option"
+                        style={{ color: "var(--schedule)" }}
+                    >
                         <UilSchedule />
                         Schedule
                     </div>
-                    <button className='button ps-button'>
+                    <button className="button ps-button" onClick={handleSubmit}>
                         Share
                     </button>
                     <div style={{ display: "none" }}>
-                        <input type="file" name='myImage' ref={imageRef} onChange={onImageChange} />
+                        <input
+                            type="file"
+                            name="myImage"
+                            ref={imageRef}
+                            onChange={onImageChange}
+                        />
                     </div>
                 </div>
                 {image && (
                     <div className="previewImage">
                         <UilTimes onClick={() => setImage(null)} />
-                        <img src={image.image} alt="" />
+                        <img src={URL.createObjectURL(image)} alt="" />
                     </div>
                 )}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default PostShare;

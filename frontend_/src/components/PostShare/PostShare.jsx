@@ -10,11 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { uploadImage } from "../../actions/uploadAction";
 
 const PostShare = () => {
-    const dispatch = useDispatch;
+    const dispatch = useDispatch();
     const { existingUser } = useSelector((state) => state.authReducer.authData);
     const [image, setImage] = useState(null);
     const desc = useRef();
-    const imageRef = useRef();
 
     const onImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
@@ -23,27 +22,56 @@ const PostShare = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const imageRef = useRef();
+
+    // const handleUpload = (e) => {
+    //     e.preventDefault();
+
+    //     const newPost = {
+    //         userId: existingUser._id,
+    //         desc: desc.current.value,
+    //     };
+
+    //     if (image) {
+    //         const data = new FormData();
+    //         const filename = Date.now() + image.name;
+    //         data.append("name", filename);
+    //         data.append("file", image);
+    //         newPost.image = filename;
+    //         console.log(newPost);
+    //         try {
+    //             dispatch(uploadImage(data));
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    // };
+
+    const handleUpload = async (e) => {
         e.preventDefault();
 
+        //post data
         const newPost = {
             userId: existingUser._id,
             desc: desc.current.value,
         };
 
+        // if there is an image with post
         if (image) {
             const data = new FormData();
-            const filename = Date.now() + image.name;
-            data.append("name", filename);
+            const fileName = Date.now() + image.name;
+            data.append("name", fileName);
             data.append("file", image);
-            newPost.image = filename;
+            newPost.image = fileName;
             console.log(newPost);
             try {
                 dispatch(uploadImage(data));
-            } catch (error) {
-                console.log(error);
+            } catch (err) {
+                console.log(err);
             }
         }
+        // dispatch(uploadPost(newPost));
+        // resetShare();
     };
 
     return (
@@ -83,13 +111,13 @@ const PostShare = () => {
                         <UilSchedule />
                         Schedule
                     </div>
-                    <button className="button ps-button" onClick={handleSubmit}>
+                    <button className="button ps-button" onClick={handleUpload}>
                         Share
                     </button>
                     <div style={{ display: "none" }}>
                         <input
                             type="file"
-                            name="myImage"
+                            // name="myImage"
                             ref={imageRef}
                             onChange={onImageChange}
                         />
